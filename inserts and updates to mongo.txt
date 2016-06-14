@@ -1,0 +1,10 @@
+db.testdb.insert([
+{"name" : "tom hanks", "oscars" : 5},
+{"name" : "adam sandler", "oscars" : 0},
+{"name" : "rob brydon", "oscars" : 0},
+{"name" : "anthony hopkins", "oscars" : 15}
+])
+
+
+db.testdb.update({"oscars" : 0}, {$set: {"oscars" : 1}}, {multi: true})
+db.testdb.update({"name" : "tom hanks"}, {"$inc": {"oscars" : 1}})
