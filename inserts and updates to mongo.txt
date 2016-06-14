@@ -8,3 +8,17 @@ db.testdb.insert([
 
 db.testdb.update({"oscars" : 0}, {$set: {"oscars" : 1}}, {multi: true})
 db.testdb.update({"name" : "tom hanks"}, {"$inc": {"oscars" : 1}})
+
+
+
+
+
+
+
+
+
+
+
+
+//update an additionl test result
+db.testdb.update({"name" : "Dale Cooper"}, {"$push" : {tests: 9}})

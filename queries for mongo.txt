@@ -53,3 +53,37 @@ db.testdb.find({"$or" : [{"status" : "drop"}, {"gpa" : {"$lte" : 3.0}}]}, {"name
 //not - doesnt meet condition = $not
 //greater than $gt - return all students (name/dob) whose gpa is not greater than 3.0
 db.testdb.find({"gpa" : {"$not" : {"$gt" : 3.0}}}, {"name" : 1, "dob" : 1, "_id" : 0})
+
+//limit the amount of results that you return - limit(num)
+db.testdb.find({"gpa" : {"$not" : {"$gt" : 3.0}}}, {"name" : 1, "dob" : 1, "_id" : 0}).limit(3)
+//limits the number returned to 3 students
+
+//skip the first amount of students - skip(num)
+db.testdb.find({"gpa" : {"$not" : {"$gt" : 3.0}}}, {"name" : 1, "dob" : 1, "_id" : 0}).skip(3)
+
+//sort by key/value -sort asc({"key" : 1})  - 1 being true
+db.testdb.find({"gpa" : {"$not" : {"$gt" : 3.0}}}, {"name" : 1, "dob" : 1, "_id" : 0}).sort({"name" : 1})
+
+//reg expression - /      ^D - begging with D, .* - match any number of characters like wildcard, $/ = end of line
+db.testdb.find({"name" : /^D.*$/}, {"name" : 1, "_id" : 0})
+
+//check arrays within documents
+//this checks each student's test array - named tests - for a score of 0
+db.testdb.find({"tests" : 0}, {"name" : 1, "_id" : 0})
+
+//check all ($all) to have the corresponding elements - in this example find the student that had both a 10 and 0 in her tests array
+db.testdb.find({"tests" : {"$all" : [0, 10]}}, {"name" : 1, "_id" : 0})
+
+
+//check a particular element position in an array - this examplpe looking at tests's first element 0 and seeing if it equated to 10
+db.testdb.find({"tests.0" : 10}, {"name" : 1})
+
+//update an additionl test result
+db.testdb.update({"name" : "Dale Cooper"}, {"$push" : {tests: 9}})
+
+//search for size of an array - $size
+//search for student that has taken 4 tests - (make sure one student at least has an array of 4)
+db.testdb.find({"tests" : {"$size" : 4}}, {"name" : 1})
+
+//return the first stipulated number of elements in an array - $slice
+db.testdb.find({"name" : "Dale Cooper"}, {"tests" : {"$slice" : 2}}, {"name" : 1, "tests" : 1})
