@@ -87,3 +87,6 @@ db.testdb.find({"tests" : {"$size" : 4}}, {"name" : 1})
 
 //return the first stipulated number of elements in an array - $slice
 db.testdb.find({"name" : "Dale Cooper"}, {"tests" : {"$slice" : 2}}, {"name" : 1, "tests" : 1})
+
+//return elements in array as specified in [] - 1,2 = 2nd and 3rd elements
+db.testdb.find({"name" : "Dale Cooper"}, {"tests" : {"$slice" : [1,2]}}, {"name" : 1, "tests" : 1})
